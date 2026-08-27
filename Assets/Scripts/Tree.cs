@@ -26,11 +26,20 @@ public class Tree : MonoBehaviour
           
             return;
 
-        Player.HP -= 15;
+        // use the instance, not the type
+        player.HP -= 15;
+        UIManager.instance.ShowNotiText($"Hurt -15\nHP: {player.HP}");
+
+        if (player.HP <= 0)
+        {
+            player.HP = 0;
+            UIManager.instance.ShowNotiText($"You are dead!!!\nPoints: {player.Point}");
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        rd.material.color = new Color(111, 60 , 10 , 255 );
+        // Color takes floats 0..1; use Color32 if you have 0..255 values
+        rd.material.color = new Color32(111, 60, 10, 255);
     }
 }
